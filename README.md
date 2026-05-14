@@ -3,9 +3,10 @@
 ## Description
 
 A small app written only in C for viewing objects in 2D/3D.
+
 Completely without AI support, only copy-paste and hacks. 
 
-Made by me, for me. (=^･ｪ･^=)
+Made by me, for me. **(=^･ｪ･^=)**
 
 ## Dependency
 
