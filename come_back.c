@@ -10,12 +10,14 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 int main (int argc, char ** args) {
+    // Инициализируем все модули что есть у SDL
+    if( SDL_Init( SDL_INIT_EVERYTHING ) ) { return 1; }
+
     // Создание указателей на объекты
     //
     // 1. Что-то типа слоя, поверхности для взаимодействия
     // 2. Окно
     // 3. Обработчик событий
-    SDL_Surface* screen_surface = NULL;
     SDL_Window* window = NULL;
     SDL_Event event;
     int x = 0, y = 0;
@@ -28,13 +30,11 @@ int main (int argc, char ** args) {
 
     // Позволяет рисовать всякое, типа линий и т.д.
     SDL_Renderer *ren = SDL_CreateRenderer(window, -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     // Проверка на ошибки
-    if (ren == NULL || window == NULL){ return 1; }
-
-    // Инициализируем все модули что есть у SDL
-    if( SDL_Init( SDL_INIT_EVERYTHING ) ) { return 1; }
+    if (ren == NULL) { printf("%s", "Render RIP"); return 1; }
+    if (window == NULL) { printf("%s", "Window RIP"); return 1; }
 
     SDL_SetRenderDrawColor(ren, 61, 32, 123, 0);
     SDL_RenderClear(ren);
