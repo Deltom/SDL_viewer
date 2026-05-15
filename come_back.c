@@ -28,16 +28,16 @@ int main (int argc, char ** args) {
     if (ren == NULL || window == NULL){ return 1; }
 
     // Инициализируем все модули что есть у SDL
-    if( !SDL_Init( SDL_INIT_EVERYTHING ) ) { return 1; }
+    if( SDL_Init( SDL_INIT_EVERYTHING ) ) { return 1; }
 
 
     //Цикл не позволяющий окну сразу закрыться, обробатывает событие - нажатие
     //на крестик на окне
-    _Bool flag = SDL_TRUE;
+    _Bool flag = 1;
     while (flag) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
-                flag = SDL_FALSE;
+                flag = 0;
         }
     }
 
