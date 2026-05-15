@@ -1,4 +1,9 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_mouse.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_timer.h>
+#include <stdio.h>
 
 // Ширина и высота
 const int SCREEN_WIDTH = 640;
@@ -13,6 +18,7 @@ int main (int argc, char ** args) {
     SDL_Surface* screen_surface = NULL;
     SDL_Window* window = NULL;
     SDL_Event event;
+    int x = 0, y = 0;
 
     // Передаём нашему окну параметры
     window = SDL_CreateWindow("Hello, SDL 2!",
@@ -30,6 +36,8 @@ int main (int argc, char ** args) {
     // Инициализируем все модули что есть у SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) ) { return 1; }
 
+    SDL_SetRenderDrawColor(ren, 61, 32, 123, 0);
+    SDL_RenderClear(ren);
 
     //Цикл не позволяющий окну сразу закрыться, обробатывает событие - нажатие
     //на крестик на окне
@@ -38,7 +46,28 @@ int main (int argc, char ** args) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 flag = 0;
+            if (event.type == SDL_MOUSEMOTION) {
+                x = event.motion.x;
+                y = event.motion.y;
+            }
+            if (event.type == SDL_KEYDOWN) {
+                if(event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
+                    SDL_SetRenderDrawColor(ren, 61, 32, 123, 0);
+                    SDL_RenderClear(ren);
+                }
+            }
+
+            Uint32 buttons = SDL_GetMouseState(&x, &y);
+            if (buttons & SDL_BUTTON(SDL_BUTTON_LEFT)){
+                SDL_Rect filledRect = { x, y, 10, 10 };
+                SDL_SetRenderDrawColor(ren, 255, 255, 0, 0);
+                SDL_RenderFillRect(ren, &filledRect);
+            }
+
+
         }
+        SDL_Delay(8);
+        SDL_RenderPresent(ren);
     }
 
     // Полное закрытие окна и подсистем
